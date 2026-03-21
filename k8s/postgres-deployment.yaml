@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdops-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mdops-postgres
+  template:
+    metadata:
+      labels:
+        app: mdops-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          env:
+            - name: POSTGRES_DB
+              value: "mdops"
+            - name: POSTGRES_USER
+              value: "achraf"
+            - name: POSTGRES_PASSWORD
+              value: "achraf"
+            - name: PGPORT
+              value: "5434"
+          ports:
+            - containerPort: 5434
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mdops-postgres
+spec:
+  selector:
+    app: mdops-postgres
+  ports:
+    - port: 5434

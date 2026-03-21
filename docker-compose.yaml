@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+
+  # ─── Base de données PostgreSQL dédiée MDOPS ───
+  mdops-db:
+    image: postgres:16
+    container_name: mdops-postgres
+    environment:
+      POSTGRES_DB: mdops
+      POSTGRES_USER: achraf
+      POSTGRES_PASSWORD: achraf
+    ports:
+      - "5434:5432"           # port 5433 pour ne pas confliter avec votre postgres local
+    volumes:
+      - mdops_pgdata:/var/lib/postgresql/data
+    networks:
+      - mdops-network
+
+volumes:
+  mdops_pgdata:
+
+networks:
+  mdops-network:
+    driver: bridge
