@@ -1,0 +1,26 @@
+<div style="max-width:500px; margin:40px auto; font-family:sans-serif">
+  <h1>MDOPS — Personnes</h1>
+
+  <div style="display:flex; gap:8px; margin-bottom:20px">
+    <input [(ngModel)]="nom" placeholder="Nom" style="flex:1;padding:8px;border:1px solid #ccc;border-radius:4px"/>
+    <input [(ngModel)]="prenom" placeholder="Prénom" style="flex:1;padding:8px;border:1px solid #ccc;border-radius:4px"/>
+    <button (click)="submit()" style="padding:8px 16px;background:#1976d2;color:white;border:none;border-radius:4px;cursor:pointer">
+      Ajouter
+    </button>
+  </div>
+
+  <table style="width:100%;border-collapse:collapse">
+    <thead>
+      <tr style="background:#f5f5f5">
+        <th style="padding:8px;border:1px solid #ddd">Nom</th>
+        <th style="padding:8px;border:1px solid #ddd">Prénom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of persons">
+        <td style="padding:8px;border:1px solid #ddd">{{p.nom}}</td>
+        <td style="padding:8px;border:1px solid #ddd">{{p.prenom}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
