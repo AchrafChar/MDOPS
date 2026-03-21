@@ -46,7 +46,7 @@ jobs:
 
       - name: Build Angular
         working-directory: mdops-frontend
-        run: npx ng build --configuration production
+        run: npx ng build --configuration production --no-prerender
 
       - name: Build Docker image frontend
         run: docker build -t mdops-frontend:latest ./mdops-frontend
