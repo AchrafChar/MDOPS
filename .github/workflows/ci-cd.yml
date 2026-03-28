@@ -67,21 +67,20 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest ./mdops-frontend
           docker push ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest
 
-  # ─── JOB 3 : Deploy sur Kubernetes ───
+# ─── JOB 3 : Deploy sur Kubernetes ───
   deploy:
-    runs-on: self-hosted       # ← votre machine locale !
-    needs: [build-backend, build-frontend]   # ← attend que les 2 builds soient OK
+    runs-on: self-hosted
+    needs: [build-backend, build-frontend]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Pull images depuis Docker Hub
+      - name: Pull et tag images
         run: |
-          eval $(minikube docker-env)
           docker pull ${{ secrets.DOCKER_USERNAME }}/mdops-backend:latest
           docker pull ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest
-          docker tag ${{ secrets.DOCKER_USERNAME }}/mdops-backend:latest mdops-backend:latest
-          docker tag ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest mdops-frontend:latest
+          minikube image load ${{ secrets.DOCKER_USERNAME }}/mdops-backend:latest
+          minikube image load ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest
 
       - name: Deploy sur Kubernetes
         run: |
