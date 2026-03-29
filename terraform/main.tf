@@ -98,8 +98,7 @@ resource "kubernetes_deployment" "backend" {
         }
         container {
           name              = "mdops-backend"
-          image             = "mdops-backend:latest"
-          image_pull_policy = "Never"
+          image = "achrafcharch/mdops-backend:latest"
           env {
             name  = "SPRING_DATASOURCE_URL"
             value = "jdbc:postgresql://mdops-postgres:${var.db_port}/${var.db_name}"
@@ -154,8 +153,7 @@ resource "kubernetes_deployment" "frontend" {
       spec {
         container {
           name              = "mdops-frontend"
-          image             = "mdops-frontend:latest"
-          image_pull_policy = "Never"
+          image = "achrafcharch/mdops-frontend:latest"
           port {
             container_port = 80
           }

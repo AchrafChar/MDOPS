@@ -69,22 +69,15 @@ jobs:
 
 # ─── JOB 3 : Deploy sur Kubernetes ───
   deploy:
-    runs-on: self-hosted
-    needs: [build-backend, build-frontend]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      runs-on: self-hosted
+      needs: [build-backend, build-frontend]
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
 
-      - name: Pull et tag images
-        run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/mdops-backend:latest
-          docker pull ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest
-          minikube image load ${{ secrets.DOCKER_USERNAME }}/mdops-backend:latest
-          minikube image load ${{ secrets.DOCKER_USERNAME }}/mdops-frontend:latest
-
-      - name: Deploy sur Kubernetes
-        run: |
-          kubectl rollout restart deployment mdops-backend -n mdops
-          kubectl rollout restart deployment mdops-frontend -n mdops
-          kubectl rollout status deployment mdops-backend -n mdops
-          kubectl rollout status deployment mdops-frontend -n mdops
+        - name: Deploy sur Kubernetes
+          run: |
+            kubectl rollout restart deployment mdops-backend -n mdops
+            kubectl rollout restart deployment mdops-frontend -n mdops
+            kubectl rollout status deployment mdops-backend -n mdops
+            kubectl rollout status deployment mdops-frontend -n mdops
